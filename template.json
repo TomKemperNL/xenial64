@@ -1,0 +1,61 @@
+{
+    "variables": {
+        "cpus": "1",
+        "memory": "512",
+        "hostname": "xenial",
+        "headless": "false",
+        "disk_size": "10240"
+    },
+    "builders": [
+        {
+            "type": "virtualbox-iso",
+            "guest_os_type": "Ubuntu_64",
+            "iso_url": "http://releases.ubuntu.com/xenial/ubuntu-16.04.1-server-amd64.iso",
+            "iso_checksum": "29a8b9009509b39d542ecb229787cdf48f05e739a932289de9e9858d7c487c80",
+            "iso_checksum_type": "sha256",
+            "vm_name": "packer-ubuntu-16.04-amd64",
+            "disk_size": "{{ user `disk_size` }}",
+            "headless": "{{ user `headless` }}",
+            "boot_wait": "5s",
+            "http_directory": "http",
+            "boot_command": [
+                "<enter><wait>",
+                "<f6><esc>",
+                "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+                "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+                "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+                "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+                "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+                "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+                "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+                "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+                "<bs><bs><bs>",
+                "/install/vmlinuz ",
+                "initrd=/install/initrd.gz ",
+                "auto=true ",
+                "priority=critical ",
+                "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg",
+                "<wait><enter>"
+            ],
+            "ssh_wait_timeout": "30m",
+            "ssh_username": "vagrant",
+            "ssh_password": "vagrant",
+            "shutdown_command": "sudo systemctl poweroff",
+            "vboxmanage": [
+                ["modifyvm", "{{ .Name }}", "--memory", "{{ user `memory` }}"],
+                ["modifyvm", "{{ .Name }}", "--cpus", "{{ user `cpus` }}"]
+            ]
+        }
+    ],
+    "provisioners": [
+        {
+        "type": "shell",
+        "scripts": "scripts/install.sh"
+        }
+    ],
+    "post-processors": [{
+        "type": "vagrant",
+        "keep_input_artifact": true,
+        "output": "ubuntu-16.04-amd64-{{.Provider}}.box"
+    }]
+}
