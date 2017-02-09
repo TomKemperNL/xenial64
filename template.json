@@ -1,11 +1,11 @@
 {
     "variables": {
-        "cpus": "1",
-        "memory": "512",
+        "cpus": "2",
+        "memory": "1024",
         "hostname": "xenial",
         "headless": "false",
         "disk_size": "10240",
-        "hyperv_switchname":"Internal-NAT"
+        "hyperv_switchname":"External-Realtek"
     },
     "builders": [
         {
@@ -18,9 +18,9 @@
             "disk_size": "{{ user `disk_size` }}",
             "headless": "{{ user `headless` }}",
             "boot_wait": "5s",
-            "http_directory": "http",
+            "http_directory": "http_virtualbox",
             "boot_command": [
-                "<enter><wait>",
+                "<enter><wait5>",
                 "<f6><esc>",
                 "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
                 "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
@@ -59,7 +59,7 @@
             "ssh_username": "vagrant",
             "ssh_password": "vagrant",	
             "ssh_timeout" : "30m",
-            "http_directory": "./http",
+            "http_directory": "./http_hyperv",
             "boot_wait": "5s",
             "boot_command": [
                 "<esc><wait10><esc><esc><enter><wait>",
@@ -79,7 +79,8 @@
             "cpu": "{{user `cpus`}}",
             "generation": 2,
             "switch_name":"{{user `hyperv_switchname`}}",
-            "enable_secure_boot":false
+            "enable_secure_boot":false,
+            "enable_dynamic_memory":false
         }
     ],
     "provisioners": [
