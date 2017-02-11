@@ -62,22 +62,28 @@
             "http_directory": "./http_hyperv",
             "boot_wait": "5s",
             "boot_command": [
-                "<esc><wait10><esc><esc><enter><wait>",
-                "set gfxpayload=1024x768<enter>",
-                "linux /install/vmlinuz ",
-                "preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/preseed.cfg ",
-                "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
-                "hostname={{.Name}} ",
-                "fb=false debconf/frontend=noninteractive ",
-                "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
-                "keyboard-configuration/variant=USA console-setup/ask_detect=false <enter>",
-                "initrd /install/initrd.gz<enter>",
-                "boot<enter>"
+                "<enter><wait5>",
+                "<f6><esc>",
+                "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+                "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+                "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+                "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+                "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+                "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+                "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+                "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+                "<bs><bs><bs>",
+                "/install/vmlinuz ",
+                "initrd=/install/initrd.gz ",
+                "auto=true ",
+                "priority=critical ",
+                "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg",
+                "<wait><enter>"
             ],
             "shutdown_command": "echo 'vagrant' | sudo -S -E shutdown -P now",
             "ram_size": "{{user `memory`}}",
             "cpu": "{{user `cpus`}}",
-            "generation": 2,
+            "generation": 1,
             "switch_name":"{{user `hyperv_switchname`}}",
             "enable_secure_boot":false,
             "enable_dynamic_memory":false
@@ -103,6 +109,12 @@
                 "scripts/hyperv.sh"
             ],
             "only": ["hyperv-iso"]
+        },
+        {
+            "type": "shell",
+            "scripts": [
+                "scripts/cleanup.sh"             
+            ]            
         }
     ],
     "post-processors": [
