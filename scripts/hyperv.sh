@@ -1,3 +1,5 @@
+sudo apt install -y linux-headers-$(uname -r) build-essential
+
 sudo apt-get install cifs-utils -y
 
 #Latest integration tools

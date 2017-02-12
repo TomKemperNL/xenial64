@@ -99,9 +99,17 @@
         {
             "type": "shell",
             "scripts": [                
-                "scripts/virtualbox.sh"
+                "scripts/virtualbox1.sh"
             ],
             "only": ["virtualbox-iso"]
+        },
+        {
+            "type": "shell",
+            "scripts": [                
+                "scripts/virtualbox2.sh"
+            ],
+            "only": ["virtualbox-iso"],
+            "pause_before": "10s"
         },
         {
             "type": "shell",
