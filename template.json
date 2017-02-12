@@ -95,18 +95,11 @@
             "scripts": [
                 "scripts/install.sh"             
             ]            
-        },
+        },      
         {
             "type": "shell",
             "scripts": [                
-                "scripts/virtualbox1.sh"
-            ],
-            "only": ["virtualbox-iso"]
-        },
-        {
-            "type": "shell",
-            "scripts": [                
-                "scripts/virtualbox2.sh"
+                "scripts/virtualbox.sh"
             ],
             "only": ["virtualbox-iso"],
             "pause_before": "10s"
@@ -116,7 +109,8 @@
             "scripts": [                
                 "scripts/hyperv.sh"
             ],
-            "only": ["hyperv-iso"]
+            "only": ["hyperv-iso"],
+            "pause_before": "10s"
         },
         {
             "type": "shell",

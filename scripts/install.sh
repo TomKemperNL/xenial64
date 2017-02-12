@@ -17,3 +17,5 @@ curl -L https://omnitruck.chef.io/install.sh | sudo bash
 
 # Disable DNS reverse lookup
 sudo bash -c "echo 'UseDNS no' >> /etc/ssh/sshd_config"
+
+sudo reboot
