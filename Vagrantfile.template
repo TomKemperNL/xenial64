@@ -1,0 +1,11 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "test/xenial64"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.linked_clone = true
+  end
+
+  config.vm.provider "hyperv" do |hv|
+    hv.differencing_disk = true
+  end
+end

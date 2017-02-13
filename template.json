@@ -47,9 +47,9 @@
                 ["modifyvm", "{{ .Name }}", "--cpus", "{{ user `cpus` }}"]
             ]
         },
-        {   
-            "type": "hyperv-iso",         
-            "vm_name":"packer-ubuntu-16.04-amd64",            
+        {
+            "type": "hyperv-iso",
+            "vm_name":"packer-ubuntu-16.04-amd64",
             "disk_size": "{{user `disk_size`}}",
             "guest_additions_mode":"disable",
             "iso_url": "http://releases.ubuntu.com/xenial/ubuntu-16.04.1-server-amd64.iso",
@@ -57,7 +57,7 @@
             "iso_checksum_type": "sha256",
             "communicator":"ssh",
             "ssh_username": "vagrant",
-            "ssh_password": "vagrant",	
+            "ssh_password": "vagrant",
             "ssh_timeout" : "30m",
             "http_directory": "./http_hyperv",
             "boot_wait": "5s",
@@ -93,12 +93,12 @@
         {
             "type": "shell",
             "scripts": [
-                "scripts/install.sh"             
-            ]            
-        },      
+                "scripts/install.sh"
+            ]
+        },
         {
             "type": "shell",
-            "scripts": [                
+            "scripts": [
                 "scripts/virtualbox.sh"
             ],
             "only": ["virtualbox-iso"],
@@ -106,7 +106,7 @@
         },
         {
             "type": "shell",
-            "scripts": [                
+            "scripts": [
                 "scripts/hyperv.sh"
             ],
             "only": ["hyperv-iso"],
@@ -115,15 +115,16 @@
         {
             "type": "shell",
             "scripts": [
-                "scripts/cleanup.sh"             
-            ]            
+                "scripts/cleanup.sh"
+            ]
         }
     ],
     "post-processors": [
         {
             "type": "vagrant",
             "keep_input_artifact": true,
-            "output": "ubuntu-16.04-amd64-{{.Provider}}.box"
+            "output": "ubuntu-16.04-amd64-{{.Provider}}.box",
+            "vagrantfile_template": "Vagrantfile.template"
         }
     ]
 }
