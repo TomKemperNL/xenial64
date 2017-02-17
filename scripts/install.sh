@@ -18,4 +18,7 @@ curl -L https://omnitruck.chef.io/install.sh | sudo bash
 # Disable DNS reverse lookup
 sudo bash -c "echo 'UseDNS no' >> /etc/ssh/sshd_config"
 
+# Set dhcp timeout to 15 seconds to allow static IP boots in Vagrant without timeout.
+cat /etc/dhcp/dhclient.conf | sed 's/timeout 300/timeout 15/' | sudo tee /etc/dhcp/dhclient.conf
+
 sudo reboot
